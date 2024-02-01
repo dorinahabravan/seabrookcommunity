@@ -181,9 +181,10 @@ padding: 4px;
     } else {
         // Display login form if the user is not logged in
     ?>
+
     <div id="divlogin">
     <h2>Log in to Seabrook Community Account:</h2>
-    <form action="login.php" method="post"> 
+    <form action="userdashboard.php" method="post"> 
          <input type="text" id="text" placeholder="Enter Your Username" name="username"required><br><br>
          <input type="password" id="text" placeholder="Enter Your Password"name="password" required><br><br>
         <input type="submit" id="button" value="Log in"><br><br>
@@ -199,6 +200,9 @@ padding: 4px;
 
     }
     ?>
+ 
+  
+
  <!--   <div class="footer">
   <p>Footer</p>
 </div> -->
