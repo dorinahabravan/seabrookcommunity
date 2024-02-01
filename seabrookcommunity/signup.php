@@ -3,11 +3,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $id = $_POST["id"];
   $firstName = $_POST["firstName"];
   $lastName = $_POST["lastName"];
-    $email = $_POST["email"];
-    $username = $_POST["username"];
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    $confirmPassword = password_hash($_POST["confirmPassword"], PASSWORD_DEFAULT);
-    $phoneNumber = $_POST["phoneNumber"];
+  $email = $_POST["email"];
+  $username = $_POST["username"];
+  $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+  $confirmPassword = password_hash($_POST["confirmPassword"], PASSWORD_DEFAULT);
+  $phoneNumber = $_POST["phoneNumber"];
 
     // Establish a connection to the database
     $conn = new mysqli("localhost", "root", "", "seabrook_community");

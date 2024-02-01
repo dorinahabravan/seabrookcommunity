@@ -47,6 +47,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close the database connection
     $conn->close();
 }
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST["id"];
+    $eventid = $_POST["eventid"];
+  /*   $userid = $_POST["userid"]; */
+    $title = $_POST["title"];
+    $date = $_POST["date"];
+    $event = $_POST["event"];
+    $image = $_POST["image"];
+    $comments = $_POST['comments'];
+    $likes = $_POST['likes'];
+   
+  
+      // Establish a connection to the database
+      $conn = new mysqli("localhost", "root", "", "seabrook_community");
+  
+      // Check connection
+      if ($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
+      }
+  
+       // Insert  details into the 'events' table
+      $sql = "INSERT INTO events (id, eventid, title, date, event, image,comments, likes) VALUES ('$id','$eventid','$title', '$date','$event','$image','$comments','$likes')"; 
+  /*     $sql = "INSERT INTO events (userid, eventid, event) VALUES('$userid',$eventid','$event')"; */
+      if ($conn->query($sql) === TRUE) {
+          echo "Event  registered successfully";
+      } else {
+          echo "Error: " . $sql . "<br>" . $conn->error;
+      }
+  
+      // Close the database connection
+      $conn->close();
+    }
 ?>
 
 
@@ -252,10 +286,13 @@ Maxim Cojocari
 <!-- post a event area -->
   <div style="min-height: 400px; flex:3;  padding:20px;  background-color: grey;">
   <div style="border:solid thin #aaa; padding: 10px; background-color:white;">
-
-<textarea placeholder="Post an event here!"></textarea><br>
-<input id="event_button"  type="submit" value="Create an event">
+<!--   Posting an event
+ -->
+ <form method="post">
+   <textarea name="event"  placeholder="Post an event here!"></textarea><br>
+   <input id="event_button"  type="submit" value="Create an event">
 <br>
+</form>
 </div>
    
 <!-- Posted events -->
@@ -296,17 +333,10 @@ Maxim Cojocari
 
 </div>
 
-
-
 </div> 
  <!--  see all events area -->
   <div style="min-height: 400px; flex:2; background-color:#405d9b"></div>
 </div>
-
-
 </div>
-
-
 </body>
-    
 </html>
