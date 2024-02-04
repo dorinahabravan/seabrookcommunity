@@ -55,9 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>SeabrookCommunity | Log in</title>
 </head>
-<style>
+<!-- <style>
 body {
   margin: 0;
 }
@@ -150,8 +151,8 @@ padding: 4px;
   padding: 20px;
   text-align: center;
 }
-</style>
-</head>
+</style> -->
+
 <body>
 
 <div class="header">
@@ -166,10 +167,14 @@ padding: 4px;
 
 </head>
 <body>
-<div class="topnav">
+<!-- <div class="topnav">
   <a href="#"></a>
   <a href="#"></a>
-  <a href="#"></a>
+  <a href="#"></a> -->
+  <div class="topnav">
+  <a href="signup.php" style="float:left">Sign Up</a>
+  <a href="index.php" style="float:left">About Us</a>
+</div>
 </div>
    
     
@@ -186,7 +191,7 @@ padding: 4px;
     <h2>Log in to Seabrook Community Account:</h2>
     <form action="userdashboard.php" method="post"> 
          <input type="text" id="text" placeholder="Enter Your Username" name="username"required><br><br>
-         <input type="password" id="text" placeholder="Enter Your Password"name="password" required><br><br>
+         <input type="password" id="text" placeholder="Enter Your Password"name="password" required><br><br><br>
         <input type="submit" id="button" value="Log in"><br><br>
         <!-- <a href='index.php?back=true'>Back</a> -->
         <input type="button" id="buttonBack" name="back" value="Back" onClick="window.location='index.php';">

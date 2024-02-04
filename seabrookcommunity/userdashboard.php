@@ -88,105 +88,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <html>
     <head>
-<title></title>
-
-
-
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>SeabrookCommunity | Log in</title>
     </head>
-<style type="text/css">
 
-#blue_bar{
-height: 80px;
-background-color: dimgrey ;
-color:whitesmoke;
-}
- #searchbox{
-width: 400px;
-height:25px;
-border-radius: 5px;
-border:none;
-padding: 4px;
-font-size:14px;
-background-image:url(search.png);
-background-repeat: no-repeat;
-background-position: right;
-
- }
-#menu_buttons{
-width: 100px;
-display: inline-block;
-margin: 2px;
-
-}
-
-textarea{
-    width: 100%;
-    border:none;
-    font-family: tahoma;
-    font-size: 14px;
-    height:60px;
-}
-
-#event_button{
-float: right;
-background-color: #405d9b;
-border:none;
-color:white;
-padding: 4px;
-font-size: 14px;
-border-radius: 2px;
-width:110px;
-}
-
-#members_img{
-
-    width:75px;
-margin: 8px;
-display:inline-block;
-border-radius: 50px;
-border:solid 2px grey;
-}
-
-#members_bar{
-    background-color: white;
-    min-height: 100px;
-    margin-top: 20px;
-    color: #aaa;
-    padding: 8px;
-    margin-bottom: 20px;
-
-}
-#members{
-
-    display: inline-block;
-    width:75px;
-margin: 8px;
-
-}
-
-#event_bar{
-    margin-top: 20px;
-    background-color: white;
-   padding: 10px;
-}
-
-#event{
-padding: 4px;
-font-size: 13px;
-display:flex;
-margin-bottom: 20px;
-
-
-}
-
-
-</style>
-
-<body style="font-family: tahoma; background-color:#d0d8e4;" >
-
+<body style="font-family: tahoma; background-color:#d0d8e4">
 <br>
 <!-- grey top bar -->
-<div id="blue_bar">
+<div id="grey_bar">
 <?php
     // Display logout link if the user is logged in
     if (isset($_SESSION["username"])) {
@@ -196,8 +107,6 @@ margin-bottom: 20px;
     <div style="width:800px; margin:auto; font-size:30px;">
     My Profile &nbsp  &nbsp <input type="text" id="searchbox" placeholder=" Search for events">
     <!-- <img src="selfie.jpg" style=" width: 30px; float:right; border-radius: 50px; border:solid 2px white;"> -->
-   
-  
 </div>
 </div><br>
 
@@ -274,10 +183,7 @@ Natalia Borga
     <br>
 Maxim Cojocari
 </div>
-
 </div>
-
-
 </div>
 
 
@@ -289,7 +195,11 @@ Maxim Cojocari
 <!--   Posting an event
  -->
  <form method="post">
-   <textarea name="event"  placeholder="Post an event here!"></textarea><br>
+   <textarea name="event"  placeholder="Post an event here!"style="width: 250%;
+    border:none;
+    font-family: tahoma;
+    font-size: 14px;
+    height:60px;"></textarea><br>
    <input id="event_button"  type="submit" value="Create an event">
 <br>
 </form>
@@ -326,14 +236,31 @@ Maxim Cojocari
 
     <a href="">Like</a>. <a href="">Comment</a> . <span style="color:#999">January 31 2024</span>
 </div>
-
 </div>
 
 
+<!--   Post 3 -->
+<div id="event">
+<div>
+<img src="user5.jpg" style="width: 65px; margin-right: 4px">
+</div>
+<div>
+    <div style="font-weight : bold; color: #405d9b">Iurie Coropceanu</div>
+                Learn Programming Online
+IUCOSOFT. <br>
+Learning with passion. Programming for pleasure.<br>
+All those wishing to register for IUCOSOFT courses are invited to create an account on the IUCOSOFT platform for courses:  https://iucosoft.com/courses , even if there is already an account on the website www.iucosoft.com.<br>
+Starting from May 2024, you can access the IUCOSOFT platform for courses.
+    <br><br>
 
+    <a href="">Like</a>. <a href="">Comment</a> . <span style="color:#999">January 31 2024</span>
+</div>
 </div>
 
-</div> 
+</div>
+</div>
+
+
  <!--  see all events area -->
   <div style="min-height: 400px; flex:2; background-color:#405d9b"></div>
 </div>

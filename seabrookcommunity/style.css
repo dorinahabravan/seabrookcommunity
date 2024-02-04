@@ -1,0 +1,636 @@
+/* Styling index page */
+body {
+  margin: 0;
+
+}
+
+/* Style the header */
+#header {
+  background-color: #f1f1f1;
+/*   background-image: url("Global_community_grey.jpg"); */
+ 
+ 
+  background-position: 70% 20%;
+  padding: 89px;
+ 
+  
+}
+/* Style the footer */
+.footer {
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+ padding: 5px;
+
+}
+
+/* Style the topnav links */
+.topnav a {
+  float:right;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {   
+    float: left;
+    width: 75%;
+  }
+  
+  /* Right column */
+  .rightcolumn {
+    float: left;
+    width: 25%;
+    background-color: #f1f1f1;
+    padding-left: 20px;
+  }
+  
+  #community_img{
+    background-image: url("Workplace-Community.jpg");
+    height:110%;
+     width: 100%; 
+     border-radius: 10px; 
+     opacity: 0.85; 
+     background-position:center;
+     background-repeat: no-repeat;
+     background-size: cover;
+  
+  
+  
+  
+  }
+  #centered {
+    position: absolute;
+    top: 20%;
+    left: 38%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    color: #f1f1f1;
+    font-style: normal;
+    font-size: 90px;
+  }
+
+  #centered_bottom{
+    position: absolute;
+    top: 20%;
+    left: 38%;
+    top: 80%;
+    transform: translate(-50%, -50%);
+    color: #f1f1f1;
+    font-style: normal;
+    font-size: 45px;
+  }
+
+  #centered_description{
+    position: absolute;
+    top: 20%;
+    left: 38%;
+    top: 90%;
+    right: 10%;
+    transform: translate(-50%, -50%);
+    color: #f1f1f1;
+    font-style: normal;
+    font-size: 20px;
+  
+  
+  }
+  #click_link{
+    position: absolute;
+    left: 20%;
+    top: 60%;
+    right: 20%;
+width: 140px;
+height: 42px;
+border-radius: 10px;
+font-weight: bold;
+border: none;
+background-color:rgb(59, 89, 152);
+color: white;
+padding: 5px;
+  
+  }
+
+ /*  #click_link_event{
+    position: absolute;
+    left: 270%;
+    top: 90%;
+    bottom: 50%;
+    right: 40%;
+    width: 140px;
+height: 40px;
+border-radius: 10px;
+font-weight: bold;
+border: none;
+background-color:rgb(59, 89, 152);
+color: white;
+padding: 5px;
+  
+  }
+ */
+
+  .popup_event {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    top: 90%;
+    right: 40%;
+    width: 140px;
+    
+  
+    
+  }
+
+  /* Popup container - can be anything you want */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  top: 100%;
+  
+
+  
+}
+
+#popup_event{
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  top: 120%;
+
+}
+
+.popup_event .popuptext_event {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 90%;
+  margin-left: -80px;
+  
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 90%;
+  margin-left: -80px;
+  
+}
+
+
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 60%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+#members_button{
+  position: absolute;
+  top: 100%;
+  left: 60%;
+  right:100%;
+ 
+}
+
+#event_button{
+  position: absolute;
+  top: 47%;
+  right: 60%;
+
+
+}
+  
+  /* Add a card effect for articles */
+  .card {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Clear floats after the columns */
+  .row::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Footer */
+  .footer {
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+    margin-top: 20px;
+  }
+  
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {   
+      width: 100%;
+      padding: 0;
+    }
+  }
+  
+  /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+  @media screen and (max-width: 400px) {
+    .topnav a {
+      float: none;
+      width: 100%;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ////////////////////////////////////// */
+/* Styling the login page */
+body {
+  margin: 0;
+}
+
+/* Style the header */
+.header {
+  background-color: #f1f1f1;
+  padding: 70px;
+  text-align: center;
+}
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: right;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+/*Style the login div*/
+#divlogin{
+  background-color:whitesmoke ; 
+  width:600px;
+   height: 300px;
+  margin:auto;
+  margin-top: 50px;
+  padding: 10px;
+  padding-top: 50px;
+  text-align: center;
+}
+div.form
+{
+    display: block;
+    text-align: center;
+}
+form
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+#text{
+  height: 40px;
+  width:300px;
+  border-radius: 4px;
+  border:solid 1px #ccc;
+  padding: 4px;
+  font-size: 14px;
+}
+/*style the login button*/
+#button{
+width: 100px;
+height: 40px;
+border-radius: 2px;
+font-weight: bold;
+border: none;
+background-color:rgb(59, 89, 152);
+color: white;
+padding: 4px;
+}
+
+#buttonBack{
+  width: 100px;
+height: 40px;
+border-radius: 2px;
+font-weight: bold;
+border: none;
+background-color:rgb(59, 89, 152);
+color: white;
+padding: 4px;
+}
+
+
+/* Style the footer */
+.footer {
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
+}
+
+
+/* ////////////////////////////////////// */
+/* Styling the signup page */
+body {
+  margin: 0;
+}
+
+/* Style the header */
+.header {
+  background-color: #f1f1f1;
+  padding: 70px;
+  text-align: center;
+}
+
+/* Style the footer */
+.footer {
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+}
+   
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: right;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}     
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+
+
+#divSignup{
+  background-color:whitesmoke ; 
+  width:600px;
+   height: 200px;
+  margin:auto;
+  margin-top: 50px;
+  padding: 10px;
+  padding-top: 30px;
+  text-align: center;
+}
+div.form
+{
+    display: block;
+    text-align: center;
+}
+form
+{
+    display: inline-block;
+   margin: auto;
+    text-align: center;
+}
+
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signup {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 50px) {
+  .cancelbtn, .signup {
+     width: 100%;
+  }
+}
+
+
+/* Styling userdashboard page */
+
+#grey_bar{
+height: 80px;
+background-color: dimgrey ;
+color:whitesmoke;
+}
+ #searchbox{
+width: 400px;
+height:25px;
+border-radius: 5px;
+border:none;
+padding: 4px;
+font-size:14px;
+background-image:url(search.png);
+background-repeat: no-repeat;
+background-position: right;
+
+ }
+#menu_buttons{
+width: 100px;
+display: inline-block;
+margin: 2px;
+
+}
+
+#textarea{
+    width: 100px;
+    border:none;
+    font-family: tahoma;
+    font-size: 14px;
+    height:60px;
+   
+}
+
+#event_button{
+background-color: #405d9b;
+border:none;
+color:white;
+padding: 4px;
+font-size: 14px;
+border-radius: 2px;
+width:110px;
+float:inline-start;
+
+
+}
+
+#members_img{
+width:75px;
+margin: 8px;
+display:inline-block;
+border-radius: 50px;
+border:solid 2px grey;
+}
+
+#members_bar{
+    background-color: white;
+    min-height: 100px;
+    margin-top: 20px;
+    color: #aaa;
+    padding: 8px;
+    margin-bottom: 20px;
+
+}
+#members{
+
+    display: inline-block;
+    width:75px;
+margin: 8px;
+
+}
+
+#event_bar{
+    margin-top: 20px;
+    background-color: white;
+   padding: 10px;
+}
+
+#event{
+padding: 4px;
+font-size: 13px;
+display:flex;
+margin-bottom: 20px;
+
+
+}
+
+
+

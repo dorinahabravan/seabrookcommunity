@@ -39,10 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <body>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>SeabrookCommunity | Signup</title>
 </head>
 <body>
-<style>
+<!-- <style>
 body {
   margin: 0;
 }
@@ -60,7 +61,7 @@ body {
   padding: 10px;
   text-align: center;
 }
-</style>
+</style> -->
 </head>
 <body>
 
@@ -76,7 +77,7 @@ body {
 </head>
 <body>
 
-<style>   
+<!-- <style>   
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
@@ -191,7 +192,7 @@ button:hover {
      width: 100%;
   }
 }
-</style>
+</style> -->
 <!-- <body>
     <h2>Sign Up</h2>
     <form action="signup.php" method="post">
@@ -204,9 +205,8 @@ button:hover {
 </html> -->
 
 <div class="topnav">
-  <a href="#"></a>
-  <a href="#"></a>
-  <a href="#"></a>
+  <a href="login.php">My Account</a>
+  <a href="index.php" style="float:left">About Us</a>
 </div>
 <div id="divSignup" >
         <form action="signup.php" method="post">
