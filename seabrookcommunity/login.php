@@ -1,8 +1,17 @@
 <?php
 session_start();
+print_r($_SESSION);
+error_reporting(E_ALL);
+error_reporting(E_ALL);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
+
+
+/* print_r($_SESSION); */
  include("classes/controller.php");
  include("classes/loginclass.php");
+ include("classes/user.php");
 
  $username ="";
  $password ="";
@@ -10,25 +19,28 @@ session_start();
  //The REQUEST_METHOD cheks what is inside in POST php variable
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
+
   $login = new Login();
   $result = $login->evaluate($_POST);
+
   //If the result is not empty,show the error
 if($result != ""){
 
-  echo "<div style='text-a;ogn:center; font-size:12px; color:white;background-color:grey;'>";
+  echo "<div style='text-align:center; font-size:12px; color:white;background-color:grey;'>";
   echo "The following errors ocurred:<br>";
   echo $result;
   echo "</div>";
 //If the login was successfully completed then redirect to the userdashboard page.
 }else{
-  header("Location: userdashboard.php");
-  die;
+
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+header("Location: userdashboard.php"); 
+exit();
 }
-$username = $_POST['username'];
-$password = $_POST['password'];
+
 
 }
-
 
 ?>
 <!-- // Logout logic
@@ -85,64 +97,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-
-        
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>SeabrookCommunity | Log in</title>
 </head>
-
-
 <body>
-
 <div class="header">
   <h1 style="float:left">SEABROOCK</h1>
   <h4 style="float:left">Community</h4>
 </div><br><br>
-
 </body>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
-
 <body>
   <div class="topnav">
   <a href="signup.php" style="float:left">Sign Up</a>
   <a href="index.php" style="float:left">About Us</a>
 </div>
 </div>
-   <!--  <?php
+   <!--<?php
     // Display logout link if the user is logged in
    /*  if (isset($_SESSION["username"])) {
         echo "Welcome, " . $_SESSION["username"] . "! | <a href='login.php?logout=true'>Logout</a>";
     } else { */
         // Display login form if the user is not logged in
-    ?> -->
-
+    ?> z-->
     <div id="divlogin">
     <h2>Log in to Seabrook Community Account:</h2>
-    <form action="userdashboard.php" method="post"> 
-         <input type="text" id="text" placeholder="Enter Your Username" value="<?php echo $username ?>" name="username"required><br><br>
-         <input type="password" id="text" placeholder="Enter Your Password" value="<?php echo $username ?>" name="password" required><br><br><br>
+    <form action="login.php" method="post"> 
+         <input type="username" id="text" placeholder="Enter Your Username" value="<?php echo htmlspecialchars($username) ?>" name="username" required><br><br>
+         <input type="password" id="text" placeholder="Enter Your Password" value="<?php echo htmlspecialchars($password) ?>" name="password" required><br><br><br>
         <input type="submit" id="button" value="Log in"><br><br>
         <!-- <a href='index.php?back=true'>Back</a> -->
         <input type="button" id="buttonBack" name="back" value="Back" onClick="window.location='index.php';">
-
-    </div>
-    </div>
     </form>
     </div>
-    <?php
-   
-
-   /*  } */
-    ?>
- 
-  
-
  <!--   <div class="footer">
   <p>Footer</p>
 </div> -->

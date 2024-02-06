@@ -1,5 +1,6 @@
 <?php
 
+
 class Login{
   
 
@@ -10,8 +11,9 @@ private $error ="";
  function evaluate($data){
     // $data is the same as $_POST variable which holds all the information
 
-  $username = addslashes($data['username']);
+  $username = $data['username'];
   $password = $data['password'];
+ /*  $password = password_hash($data["password"], PASSWORD_DEFAULT); */
 
    $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1 ";
        /* $result = $conn->query($sql);
@@ -41,12 +43,13 @@ private $error ="";
         $row = $result[0];
 
 
-        if($password == $row['$password']){
+        if(password_verify($password, $row['password'])){
             //create session data
            /* $_SESSION['username'] = $row['username']; */ // Store username in session for future use
            $_SESSION['userid'] = $row['userid'];
-         /*   $_SESSION['username'] = $row['username'];  */
-       
+         
+           $_SESSION['username'] = $row['username'];
+           header('location:userdasboard.php?user=' . $_SESSION['userid']);
         
         }else{
         $this->error .="Wrong password!<br>";
@@ -64,9 +67,9 @@ private $error ="";
     }
     
 //Check if the user is logged in
-    public function check_login($id){
+    public function check_login($userid){
 
-        $sql = "SELECT userid FROM users WHERE userid = '$id' LIMIT 1 ";
+        $sql = "SELECT userid FROM users WHERE userid = 'userid' LIMIT 1 ";
         $DB = new ControllerDatabase();
         $result = $DB ->read($sql);
 

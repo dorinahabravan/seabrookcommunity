@@ -26,18 +26,28 @@ function read($sql){
     $result = mysqli_query($conn, $sql);
     
     //Check if the result is true or false 
-    if(!$result){
-    
+    if(is_array($result)){
+    $row = $result[0];
     return false;
     
     }else{
-        $data = false;
+        $data = array();
         while($row = mysqli_fetch_assoc($result)){
       //Data becomes in an array
           $data[] = $row;
         }
     return $data;
     }
+
+
+    /* if ($result) {
+        // Fetch data as an associative array
+        $data = mysqli_fetch_assoc($result);
+        return $data ? $data : false;
+    } else {
+        // Handle the error (e.g., return false or log it)
+        return false;
+    } */
 
 }
 

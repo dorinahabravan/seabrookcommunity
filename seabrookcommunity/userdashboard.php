@@ -1,37 +1,53 @@
 <?php
-
-
 session_start();
+print_r($_SESSION);
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1); 
+
 
 include("classes/controller.php");
 include("classes/loginclass.php");
-
+include("classes/userclass.php");
+//check is user is logged in
 if(isset($_SESSION['userid']) && is_numeric($_SESSION['userid'])){
-    $id = $_SESSION['userid'];
+  /*   $_SESSION['msg'] = "Log in first!"; */
+    $userid = $_SESSION['userid'];
     $login = new Login();
-    $result = $login->check_login($id);
+    $result = $login->check_login($userid);
  
 
    if($result){
 
 
 //retrieve the data
-echo "Everything is fine!";
+$user = new User();
+$user_data = $user->get_data($userid);
+
+if(!$user_data){
+header("Location: login.php");
+    die();  
+
 }else{
-header("Location : login.php");
-die;
-}
-}else{
-    header("Location : login.php");
-die;
 
-
-
+ header("Location: userdashboard.php");
+ die();
 
 }
+
+} else{
+header("Location: login.php");
+die(); 
+
+}
+
+}
+
+
+else {
+    header('Location: login.php?msg=Not logged in');
+    exit(); }
+  
+/* print_r($user_data); */
+
 
 
 
@@ -150,7 +166,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -170,7 +187,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     ?> -->
     <div style="width:800px; margin:auto; font-size:30px;">
     My Profile &nbsp  &nbsp <input type="text" id="searchbox" placeholder=" Search for events">
-    <!-- <img src="selfie.jpg" style=" width: 30px; float:right; border-radius: 50px; border:solid 2px white;"> -->
+
+    <a href="logout.php">
+    <span style="font-size: 11px ; float:right;margin:10px;color: white">Log out</span>
+    </a>
+    <img src="selfie.jpg" style=" width: 30px; float:right; border-radius: 50px; border:solid 2px white;">
+
+    
+ 
 </div>
 </div><br>
 
@@ -258,7 +282,7 @@ Maxim Cojocari
   <div style="border:solid thin #aaa; padding: 10px; background-color:white;">
 <!--   Posting an event
  -->
- <form method="post">
+ <form method="post" action="userdashboard.php">
    <textarea name="event"  placeholder="Post an event here!"style="width: 250%;
     border:none;
     font-family: tahoma;

@@ -1,4 +1,5 @@
 <?php
+session_start();
  include("classes/controller.php");
  include("classes/signupclass.php");
 

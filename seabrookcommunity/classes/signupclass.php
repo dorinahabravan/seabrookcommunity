@@ -44,8 +44,13 @@ public function create_user($data){
   $lastName = ucfirst($data["lastName"]);
   $email = $data["email"];
   $username = $data["username"];
-  $password = password_hash($data["password"], PASSWORD_DEFAULT);
-  $confirmPassword = password_hash($data["confirmPassword"], PASSWORD_DEFAULT);
+
+  $password = $data["password"];
+  $confirmPassword = $data["confirmPassword"];
+
+
+/*   $password = password_hash($data["password"], PASSWORD_DEFAULT);
+  $confirmPassword = password_hash($data["confirmPassword"], PASSWORD_DEFAULT); */
   $phoneNumber = $data["phoneNumber"];
 
   //Calling the method that generate a random userid
