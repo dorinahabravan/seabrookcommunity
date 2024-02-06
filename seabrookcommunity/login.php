@@ -1,7 +1,37 @@
 <?php
 session_start();
 
-// Logout logic
+ include("classes/controller.php");
+ include("classes/loginclass.php");
+
+ $username ="";
+ $password ="";
+
+ //The REQUEST_METHOD cheks what is inside in POST php variable
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+  $login = new Login();
+  $result = $login->evaluate($_POST);
+  //If the result is not empty,show the error
+if($result != ""){
+
+  echo "<div style='text-a;ogn:center; font-size:12px; color:white;background-color:grey;'>";
+  echo "The following errors ocurred:<br>";
+  echo $result;
+  echo "</div>";
+//If the login was successfully completed then redirect to the userdashboard page.
+}else{
+  header("Location: userdashboard.php");
+  die;
+}
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+}
+
+
+?>
+<!-- // Logout logic
 if (isset($_GET["logout"])) {
     // Unset all session variables
     $_SESSION = array();
@@ -36,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verify password
         if (password_verify($password, $row["password"])) {
             $_SESSION["username"] = $username; // Store username in session for future use
+           /*  $_SESSION["userid"] = $userid; */
         } else {
             echo "Invalid password or username";
         }
@@ -46,7 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close the database connection
     $conn->close();
 }
-?>
+
+
+
+
+?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,100 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>SeabrookCommunity | Log in</title>
 </head>
-<!-- <style>
-body {
-  margin: 0;
-}
 
-/* Style the header */
-.header {
-  background-color: #f1f1f1;
-  padding: 70px;
-  text-align: center;
-}
-/* Style the top navigation bar */
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}
-
-/* Style the topnav links */
-.topnav a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-/* Change color on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-/*Style the login div*/
-#divlogin{
-  background-color:whitesmoke ; 
-  width:600px;
-   height: 300px;
-  margin:auto;
-  margin-top: 50px;
-  padding: 10px;
-  padding-top: 50px;
-  text-align: center;
-}
-div.form
-{
-    display: block;
-    text-align: center;
-}
-form
-{
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
-#text{
-  height: 40px;
-  width:300px;
-  border-radius: 4px;
-  border:solid 1px #ccc;
-  padding: 4px;
-  font-size: 14px;
-}
-/*style the login button*/
-#button{
-width: 100px;
-height: 40px;
-border-radius: 2px;
-font-weight: bold;
-border: none;
-background-color:rgb(59, 89, 152);
-color: white;
-padding: 4px;
-}
-
-#buttonBack{
-  width: 100px;
-height: 40px;
-border-radius: 2px;
-font-weight: bold;
-border: none;
-background-color:rgb(59, 89, 152);
-color: white;
-padding: 4px;
-}
-
-
-/* Style the footer */
-.footer {
-  background-color: #f1f1f1;
-  padding: 20px;
-  text-align: center;
-}
-</style> -->
 
 <body>
 
@@ -164,34 +106,27 @@ padding: 4px;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
 </head>
+
 <body>
-<!-- <div class="topnav">
-  <a href="#"></a>
-  <a href="#"></a>
-  <a href="#"></a> -->
   <div class="topnav">
   <a href="signup.php" style="float:left">Sign Up</a>
   <a href="index.php" style="float:left">About Us</a>
 </div>
 </div>
-   
-    
-
-    <?php
+   <!--  <?php
     // Display logout link if the user is logged in
-    if (isset($_SESSION["username"])) {
+   /*  if (isset($_SESSION["username"])) {
         echo "Welcome, " . $_SESSION["username"] . "! | <a href='login.php?logout=true'>Logout</a>";
-    } else {
+    } else { */
         // Display login form if the user is not logged in
-    ?>
+    ?> -->
 
     <div id="divlogin">
     <h2>Log in to Seabrook Community Account:</h2>
     <form action="userdashboard.php" method="post"> 
-         <input type="text" id="text" placeholder="Enter Your Username" name="username"required><br><br>
-         <input type="password" id="text" placeholder="Enter Your Password"name="password" required><br><br><br>
+         <input type="text" id="text" placeholder="Enter Your Username" value="<?php echo $username ?>" name="username"required><br><br>
+         <input type="password" id="text" placeholder="Enter Your Password" value="<?php echo $username ?>" name="password" required><br><br><br>
         <input type="submit" id="button" value="Log in"><br><br>
         <!-- <a href='index.php?back=true'>Back</a> -->
         <input type="button" id="buttonBack" name="back" value="Back" onClick="window.location='index.php';">
@@ -203,7 +138,7 @@ padding: 4px;
     <?php
    
 
-    }
+   /*  } */
     ?>
  
   

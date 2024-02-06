@@ -1,9 +1,56 @@
-
 <?php
+
+
 session_start();
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1); 
+
+include("classes/controller.php");
+include("classes/loginclass.php");
+
+if(isset($_SESSION['userid']) && is_numeric($_SESSION['userid'])){
+    $id = $_SESSION['userid'];
+    $login = new Login();
+    $result = $login->check_login($id);
+ 
+
+   if($result){
+
+
+//retrieve the data
+echo "Everything is fine!";
+}else{
+header("Location : login.php");
+die;
+}
+}else{
+    header("Location : login.php");
+die;
+
+
+
+
+}
+
+
+
+
+
+/* 
+ini_set('display_errors', 1);
+error_reporting(E_ALL); */
+
+/* // Check if the user is logged in
+if (!isset($_SESSION["username"])) {
+    header("Location: login.php"); // Redirect to the login page if not logged in
+    exit();
+} */
+
+
+
 // Logout logic
-if (isset($_GET["logout"])) {
+/* if (isset($_GET["logout"])) {
     // Unset all session variables
     $_SESSION = array();
 
@@ -11,9 +58,9 @@ if (isset($_GET["logout"])) {
     session_destroy();
 
     echo "You have been successfully logged out.";
-}
+} */
 
-// Login logic
+/* // Login logic
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $username = $_POST["username"];
@@ -30,13 +77,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve user details from the 'users' table
     $sql = "SELECT * FROM users WHERE username='$username'";
     $result = $conn->query($sql);
+ */
+     //Data in the array
+   /*  while($row = mysqli_fetch_array($result)){
+        echo "<pre>";
+        print_r($row);
+        echo "</pre>";
+    
+    } */
 
-    if ($result->num_rows > 0) {
+    /* if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
 
         // Verify password
         if (password_verify($password, $row["password"])) {
             $_SESSION["username"] = $username; // Store username in session for future use
+          
         } else {
             echo "Invalid password or username";
         }
@@ -46,13 +102,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Close the database connection
     $conn->close();
-}
+} */
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+/*if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
     $eventid = $_POST["eventid"];
-  /*   $userid = $_POST["userid"]; */
+    $userid = $_POST["userid"]; 
     $title = $_POST["title"];
     $date = $_POST["date"];
     $event = $_POST["event"];
@@ -71,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
        // Insert  details into the 'events' table
       $sql = "INSERT INTO events (id, eventid, title, date, event, image,comments, likes) VALUES ('$id','$eventid','$title', '$date','$event','$image','$comments','$likes')"; 
-  /*     $sql = "INSERT INTO events (userid, eventid, event) VALUES('$userid',$eventid','$event')"; */
+       $sql = "INSERT INTO events (userid, eventid, event) VALUES('$userid',$eventid','$event')"; 
       if ($conn->query($sql) === TRUE) {
           echo "Event  registered successfully";
       } else {
@@ -81,10 +137,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Close the database connection
       $conn->close();
     }
+
+//Posting starts here
+if($_SERVER['REQUEST_METHOD'] == "POST"){
+
+    $event = new Event();
+
+
+
+
+}*/
+
 ?>
-
-
-
 
 <html>
     <head>
@@ -98,12 +162,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <br>
 <!-- grey top bar -->
 <div id="grey_bar">
-<?php
+<!-- <?php
     // Display logout link if the user is logged in
-    if (isset($_SESSION["username"])) {
+    /* if (isset($_SESSION["username"])) {
         echo "Welcome, " . $_SESSION["username"] . "! | <a href='login.php?logout=true'>Logout</a>";
-    }
-    ?>
+    } */
+    ?> -->
     <div style="width:800px; margin:auto; font-size:30px;">
     My Profile &nbsp  &nbsp <input type="text" id="searchbox" placeholder=" Search for events">
     <!-- <img src="selfie.jpg" style=" width: 30px; float:right; border-radius: 50px; border:solid 2px white;"> -->
@@ -199,8 +263,10 @@ Maxim Cojocari
     border:none;
     font-family: tahoma;
     font-size: 14px;
-    height:60px;"></textarea><br>
-   <input id="event_button"  type="submit" value="Create an event">
+    height:60px;"
+    ></textarea><br>
+    <input id="event_button"  type="submit" value="Create an event">
+   
 <br>
 </form>
 </div>
@@ -208,7 +274,7 @@ Maxim Cojocari
 <!-- Posted events -->
 <div id="event_bar">
   <!--   Post 1 -->
-<div id="event">
+<!-- <div id="event">
 <div>
 <img src="user1.jpg" style="width: 65px; margin-right: 4px">
 </div>
@@ -221,10 +287,10 @@ Maxim Cojocari
     <a href="">Like</a>. <a href="">Comment</a> . <span style="color:#999">January 31 2024</span>
 </div>
 
-</div>
+</div> -->
 
  <!--   Post 2 -->
- <div id="event">
+ <!-- <div id="event">
 <div>
 <img src="user3.jpg" style="width: 65px; margin-right: 4px">
 </div>
@@ -237,10 +303,10 @@ Maxim Cojocari
     <a href="">Like</a>. <a href="">Comment</a> . <span style="color:#999">January 31 2024</span>
 </div>
 </div>
-
+ -->
 
 <!--   Post 3 -->
-<div id="event">
+<!-- <div id="event">
 <div>
 <img src="user5.jpg" style="width: 65px; margin-right: 4px">
 </div>
@@ -258,7 +324,18 @@ Starting from May 2024, you can access the IUCOSOFT platform for courses.
 </div>
 
 </div>
+</div> -->
+<?php
+/* for($i == 0; $i < 10; $i++){
+
+
+} */
+include("events.php");
+
+
+?>
 </div>
+
 
 
  <!--  see all events area -->
