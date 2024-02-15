@@ -1,13 +1,16 @@
 <?php
 
 
+
 //The configuration of the blueprint class for connecting with the database
 class ControllerDatabase{
+   /*  private $connection;
+    private $lastError; */
 
 private $host ="localhost";
 private $username ="root";
 private $password ="";
-private $db ="seabrook_community";
+private $db ="seabrookcommunity";
 
 function connect(){
 
@@ -28,6 +31,7 @@ function read($sql){
     //Check if the result is true or false 
     if(is_array($result)){
     $row = $result[0];
+   
     return false;
     
     }else{
@@ -36,18 +40,16 @@ function read($sql){
       //Data becomes in an array
           $data[] = $row;
         }
+
+       /*  if ($result === false) {
+            $this->lastError = $this->connection->error;
+            error_log("Database query failed: " . $this->lastError);
+        } */
     return $data;
     }
 
 
-    /* if ($result) {
-        // Fetch data as an associative array
-        $data = mysqli_fetch_assoc($result);
-        return $data ? $data : false;
-    } else {
-        // Handle the error (e.g., return false or log it)
-        return false;
-    } */
+  
 
 }
 
@@ -70,5 +72,23 @@ function save($sql){
 
 }
 
+
+function delete($sql){
+    //Calling the connect function to connect to the database.
+    $conn = $this->connect();
+    $result = mysqli_query($conn, $sql);
+    
+    //Check if the result is true or false 
+    if(!$result == false){
+    
+    return false;
+    
+    }else{
+    return true;
+    
+    }
+
+
 }
 
+}

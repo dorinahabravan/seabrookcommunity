@@ -1,17 +1,12 @@
 <?php
 session_start();
+ob_start();
+
 print_r($_SESSION);
-error_reporting(E_ALL);
-error_reporting(E_ALL);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-
-
-/* print_r($_SESSION); */
- include("classes/controller.php");
- include("classes/loginclass.php");
- include("classes/user.php");
+include("classes/loaderclass.php");
 
  $username ="";
  $password ="";
@@ -22,9 +17,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $login = new Login();
   $result = $login->evaluate($_POST);
-
+  var_dump($result);
   //If the result is not empty,show the error
-if($result != ""){
+ if($result != ""){
 
   echo "<div style='text-align:center; font-size:12px; color:white;background-color:grey;'>";
   echo "The following errors ocurred:<br>";
@@ -35,65 +30,21 @@ if($result != ""){
 
   $username = $_POST['username'];
   $password = $_POST['password'];
-header("Location: userdashboard.php"); 
-exit();
-}
+  echo "Redirecting to userdashboard.php";
+header("Location:userdashboard.php"); 
+/* header("Location: https://www.example.com"); */
+exit(); 
+}  
+ 
 
-
-}
-
-?>
-<!-- // Logout logic
-if (isset($_GET["logout"])) {
-    // Unset all session variables
-    $_SESSION = array();
-
-    // Destroy the session
-    session_destroy();
-
-    echo "You have been successfully logged out.";
-}
-
-// Login logic
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-    // Establish a connection to the database
-    $conn = new mysqli("localhost", "root", "", "seabrook_community");
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Retrieve user details from the 'users' table
-    $sql = "SELECT * FROM users WHERE username='$username'";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-
-        // Verify password
-        if (password_verify($password, $row["password"])) {
-            $_SESSION["username"] = $username; // Store username in session for future use
-           /*  $_SESSION["userid"] = $userid; */
-        } else {
-            echo "Invalid password or username";
-        }
-    } else {
-        echo "User not found";
-    }
-
-    // Close the database connection
-    $conn->close();
 }
 
 
 
 
-?> -->
+ob_end_flush();
+
+?> 
 
 <!DOCTYPE html>
 <html lang="en">

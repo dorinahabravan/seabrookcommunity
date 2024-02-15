@@ -249,9 +249,10 @@ padding: 5px;
 }
 
 #event_button{
-  position: absolute;
+  position: relative;
   top: 47%;
-  right: 60%;
+  right: 20%;
+  top: 200%;
 
 
 }
@@ -624,6 +625,7 @@ margin: 8px;
     margin-top: 20px;
     background-color: white;
    padding: 10px;
+   height: 90%;
 }
 
 #event{

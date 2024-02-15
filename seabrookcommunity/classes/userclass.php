@@ -23,6 +23,22 @@ return false;
 }
 
 
+}
+
+public function getUser($userid){
+
+  $sql ="SELECT * FROM users WHERE userid = $userid LIMIT 10 ";
+  $DB = new ControllerDatabase();
+  $result = $DB->read($sql);
+
+if($result){
+return $result[0];
+
+
+}else{
+
+return false;
+}
 
 
 }

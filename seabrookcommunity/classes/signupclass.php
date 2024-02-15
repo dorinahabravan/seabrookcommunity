@@ -40,21 +40,17 @@ return $this->error;
 
 public function create_user($data){
     // $data is the same as $_POST variable which holds all the information
+    $userid = $data['userid'];
   $firstName = ucfirst($data["firstName"]);
   $lastName = ucfirst($data["lastName"]);
   $email = $data["email"];
   $username = $data["username"];
-
-  $password = $data["password"];
-  $confirmPassword = $data["confirmPassword"];
-
-
-/*   $password = password_hash($data["password"], PASSWORD_DEFAULT);
-  $confirmPassword = password_hash($data["confirmPassword"], PASSWORD_DEFAULT); */
+  $password = password_hash($data["password"], PASSWORD_BCRYPT); // Hash the password
+  $confirmPassword = password_hash($data["confirmPassword"], PASSWORD_BCRYPT); // Hash the confirmPassword
   $phoneNumber = $data["phoneNumber"];
 
   //Calling the method that generate a random userid
-  $userid = $this->create_userid();
+  /* $userid = $this->create_userid(); */
 
 
      //I wrote the query without the id and it solved the 
@@ -67,7 +63,7 @@ public function create_user($data){
 
 }
 //Function created by php to generate an userid
- private function  create_userid()
+/*  private function  create_userid()
 {
     $length = rand(4, 19);
     $number ="";
@@ -85,7 +81,7 @@ return $number;
 
 
 
-}
+} */
 
 
 

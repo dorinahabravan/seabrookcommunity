@@ -1,8 +1,6 @@
 <?php
 session_start();
- include("classes/controller.php");
- include("classes/signupclass.php");
-
+include("classes/loaderclass.php");
  //The REQUEST_METHOD cheks what is inside in POST php variable
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 

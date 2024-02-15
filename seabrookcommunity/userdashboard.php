@@ -1,12 +1,12 @@
 <?php
 session_start();
-print_r($_SESSION);
 
 
+include("classes/loaderclass.php");
 
-include("classes/controller.php");
-include("classes/loginclass.php");
-include("classes/userclass.php");
+
+/* include("events.php"); */
+ 
 //check is user is logged in
 if(isset($_SESSION['userid']) && is_numeric($_SESSION['userid'])){
   /*   $_SESSION['msg'] = "Log in first!"; */
@@ -15,7 +15,7 @@ if(isset($_SESSION['userid']) && is_numeric($_SESSION['userid'])){
     $result = $login->check_login($userid);
  
 
-   if($result){
+   if($login->check_login($userid)){
 
 
 //retrieve the data
@@ -23,16 +23,12 @@ $user = new User();
 $user_data = $user->get_data($userid);
 
 if(!$user_data){
-header("Location: login.php");
-    die();  
-
+/* header("Location: login.php");
+    die();  */ 
 }else{
-
  header("Location: userdashboard.php");
  die();
-
 }
-
 } else{
 header("Location: login.php");
 die(); 
@@ -43,128 +39,52 @@ die();
 
 
 else {
-    header('Location: login.php?msg=Not logged in');
-    exit(); }
-  
-/* print_r($user_data); */
-
-
-
-
-
-
-/* 
-ini_set('display_errors', 1);
-error_reporting(E_ALL); */
-
-/* // Check if the user is logged in
-if (!isset($_SESSION["username"])) {
-    header("Location: login.php"); // Redirect to the login page if not logged in
-    exit();
-} */
-
-
-
-// Logout logic
-/* if (isset($_GET["logout"])) {
-    // Unset all session variables
-    $_SESSION = array();
-
-    // Destroy the session
-    session_destroy();
-
-    echo "You have been successfully logged out.";
-} */
-
-/* // Login logic
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-    // Establish a connection to the database
-    $conn = new mysqli("localhost", "root", "", "seabrook_community");
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Retrieve user details from the 'users' table
-    $sql = "SELECT * FROM users WHERE username='$username'";
-    $result = $conn->query($sql);
- */
-     //Data in the array
-   /*  while($row = mysqli_fetch_array($result)){
-        echo "<pre>";
-        print_r($row);
-        echo "</pre>";
-    
-    } */
-
-    /* if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-
-        // Verify password
-        if (password_verify($password, $row["password"])) {
-            $_SESSION["username"] = $username; // Store username in session for future use
-          
-        } else {
-            echo "Invalid password or username";
-        }
-    } else {
-        echo "User not found";
-    }
-
-    // Close the database connection
-    $conn->close();
-} */
-
-
-/*if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST["id"];
-    $eventid = $_POST["eventid"];
-    $userid = $_POST["userid"]; 
-    $title = $_POST["title"];
-    $date = $_POST["date"];
-    $event = $_POST["event"];
-    $image = $_POST["image"];
-    $comments = $_POST['comments'];
-    $likes = $_POST['likes'];
+    header("Location: login.php");
+    exit(); 
+}
    
-  
-      // Establish a connection to the database
-      $conn = new mysqli("localhost", "root", "", "seabrook_community");
-  
-      // Check connection
-      if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
-      }
-  
-       // Insert  details into the 'events' table
-      $sql = "INSERT INTO events (id, eventid, title, date, event, image,comments, likes) VALUES ('$id','$eventid','$title', '$date','$event','$image','$comments','$likes')"; 
-       $sql = "INSERT INTO events (userid, eventid, event) VALUES('$userid',$eventid','$event')"; 
-      if ($conn->query($sql) === TRUE) {
-          echo "Event  registered successfully";
-      } else {
-          echo "Error: " . $sql . "<br>" . $conn->error;
-      }
-  
-      // Close the database connection
-      $conn->close();
-    }
-
-//Posting starts here
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-
-    $event = new Event();
+ print_r($user_data);
 
 
+//posting events starts here
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        $event = new Event();
+        $userid = $_SESSION['userid']; 
+       
+        $result = $event-> createEvent($userid, $_POST);
+        if($result == ""){
+
+            header("Location: userdashboard.php");
+            die();
+        
+        
+        
+        }else{
+        
+            echo "<div style='text-align:center; font-size:12px; color:white;background-color:grey;'>";
+            echo "The following errors ocurred:<br>";
+            echo $result;
+            echo "</div>";
+        
+        }
+
+}
+
+//retrieve events
+
+$event = new Event();
+$userid = $_SESSION['userid'];
+$events = $event->getEvents($userid);
 
 
-}*/
+
+
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -172,26 +92,46 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Include jQuery UI for the date picker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>SeabrookCommunity | Log in</title>
     </head>
-
 <body style="font-family: tahoma; background-color:#d0d8e4">
+
+<!-- Date picker -->
+<script>
+        $(function() {
+            // Use jQuery UI to initialize the date picker
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd", // MySQL date format
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+    </script>
 <br>
 <!-- grey top bar -->
 <div id="grey_bar">
-<!-- <?php
+ <?php
     // Display logout link if the user is logged in
-    /* if (isset($_SESSION["username"])) {
+    if (isset($_SESSION["username"])) {
         echo "Welcome, " . $_SESSION["username"] . "! | <a href='login.php?logout=true'>Logout</a>";
-    } */
-    ?> -->
+    } 
+    ?> 
     <div style="width:800px; margin:auto; font-size:30px;">
-    My Profile &nbsp  &nbsp <input type="text" id="searchbox" placeholder=" Search for events">
-
+    <form method ="get"  action="search.php">
+    My Profile &nbsp  &nbsp <input type="text" id="searchbox" name="find" placeholder=" Search events by title">
+    </form>
     <a href="logout.php">
     <span style="font-size: 11px ; float:right;margin:10px;color: white">Log out</span>
     </a>
     <img src="selfie.jpg" style=" width: 30px; float:right; border-radius: 50px; border:solid 2px white;">
+   
+    
+    </div>
 
     
  
@@ -205,17 +145,17 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 <div style="background-color: white; text-align: center; color: #405d9b">
  <img src="Workplace-Community.jpg" style="width: 100%;">
  <br>
- <div id="menu_buttons">Timeline</div>
- <div id="menu_buttons">About</div>
- <div id="menu_buttons">Events</div>
- <div id="menu_buttons">Settings</div>
+
+
+ <div id="menu_buttons">Members</div>
+
 </div>
 
 
 
 <div style="min-height: 100px; flex:1">
 <div id="members_bar">
-Members<br>
+
 <!-- The first user -->
 <div id="members">
     <div><img id="members_img" src="user1.jpg"></div>
@@ -283,7 +223,8 @@ Maxim Cojocari
 <!--   Posting an event
  -->
  <form method="post" action="userdashboard.php">
-   <textarea name="event"  placeholder="Post an event here!"style="width: 250%;
+    <textarea name="title" placeholder="Event Title"></textarea><br>
+   <textarea name="event"  placeholder="Post an event here!" placeholder="Event Title"style="width: 250%;
     border:none;
     font-family: tahoma;
     font-size: 14px;
@@ -297,6 +238,23 @@ Maxim Cojocari
    
 <!-- Posted events -->
 <div id="event_bar">
+<?php 
+
+if($events){
+
+    foreach ($events as $ROW){
+    
+        $user = new User();
+     
+        $ROW_USER = $user->getUser($ROW['userid']);
+        include("events.php");
+
+    }
+    } 
+
+
+
+?>
   <!--   Post 1 -->
 <!-- <div id="event">
 <div>
@@ -349,22 +307,103 @@ Starting from May 2024, you can access the IUCOSOFT platform for courses.
 
 </div>
 </div> -->
-<?php
-/* for($i == 0; $i < 10; $i++){
 
 
-} */
-include("events.php");
 
 
-?>
+
+
 </div>
-
+</div>
 
 
  <!--  see all events area -->
-  <div style="min-height: 400px; flex:2; background-color:#405d9b"></div>
+  <div style="min-height: 400px; flex:2; background-color:white">
+
+<div style="max-height: 400px; width: 90%; margin:auto; text-align:center; padding : 14px; background-color: #f0f0f0; border-radius: 25px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)">
+<h3>Search events by date</h3>
+
+<form action="search.php" method="get">
+    <!-- <label for="datepicker">Select Date:</label> -->
+    <input type="text" id="datepicker" name="find" placeholder="Search events by date"style="width: 100%; padding: 8px; margin-bottom: 10px;" required>
+    <input type="submit" name="search" value="Search" style="padding: 10px; background-color: #405d9b; color: white; border: none; border-radius: 4px; cursor: pointer;">
+</form>
+</div><br><br><br>
+  <div id="event">
+<div>
+<img src="user1.jpg" style="width: 65px; margin-right: 4px">
+</div>
+<div>
+    <div style="font-weight : bold; color: #405d9b">
+    <?php echo $ROW_USER['firstName'] . " " . $ROW_USER['lastName'];?></div>
+    
+    <div style="font-weight : bold; color: black; font-style: bold;"> 
+<?php 
+ echo $ROW['title'];
+?></div>
+
+
+    
+<div style="font-weight :normal; color: black;">
+<?php 
+   echo $ROW['event'];
+  ?></div>
+    <br><br>
+
+    <a href="">Like</a>. <a href="">Comment</a> . <span style="color:#999"><?php echo $ROW['date'];?></span>
+</div>
+
+</div>
+
+    <!--   Post 2 -->
+ <div id="event">
+<div>
+<img src="user3.jpg" style="width: 65px; margin-right: 4px">
+</div>
+<div>
+    <div style="font-weight : bold; color: #405d9b">
+    <?php echo $ROW_USER['firstName'] . " " . $ROW_USER['lastName'];?></div>
+    
+    <div style="font-weight : bold; color: black; font-style: bold;"> 
+<?php 
+ echo $ROW['title'];
+?></div>
+
+
+    
+<div style="font-weight :normal; color: black;">
+<?php 
+   echo $ROW['event'];
+  ?></div>
+    <br><br>
+
+    <a href="">Like</a>. <a href="">Comment</a> . <span style="color:#999"><?php echo $ROW['date'];?></span>
+</div>
+
+</div>
+    
+    <!--   Post 3 -->
+<div id="event">
+<div>
+<img src="user5.jpg" style="width: 65px; margin-right: 4px">
+</div>
+<div>
+    <div style="font-weight : bold; color: #405d9b">Iurie Coropceanu</div>
+                Learn Programming Online
+IUCOSOFT. <br>
+Learning with passion. Programming for pleasure.<br>
+All those wishing to register for IUCOSOFT courses are invited to create an account on the IUCOSOFT platform for courses: https://iucosoft.com/courses even if there is already an account on the website www.iucosoft.com.<br>
+Starting from May 2024, you can access the IUCOSOFT platform for courses.
+    <br><br>
+
+    <a href="">Like</a>. <a href="">Comment</a> . <span style="color:#999">January 31 2024</span>
 </div>
 </div>
+
+
+
+</div>
+
+
 </body>
 </html>

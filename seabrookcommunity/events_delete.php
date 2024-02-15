@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <title>SeabrookCommunity | Events</title>
+    <title>SeabrookCommunity | Log in</title>
     </head>
     <body>
 
@@ -27,56 +27,19 @@
 </div>
 <div>
     <div style="font-weight : bold; color: #405d9b">
-    <?php echo $ROW_USER['firstName'] . " " . $ROW_USER['lastName'];?></div><br>
+    <?php echo $ROW_USER['firstName'] . " " . $ROW_USER['lastName'];?></div>
     
-    
-<div style="font-weight : bold; color: black; font-style: bold;"> 
-<?php 
- echo $ROW['title'];
-?></div>
-
-
-    
-<div style="font-weight :normal; color: black;">
-<?php 
+    <?php 
+ 
    echo $ROW['event'];
-  ?></div>
+  ?>
     
     <br><br>
-    <?php 
-    $likes = "";
 
-    $likes = ($ROW['likes'] > 0) ? "(" .$ROW['likes']. ")" : "" ;
    
-    
-    ?>
-    <a href="likes.php?type=event&eventid=<?php echo $ROW['eventid']?>">Like<?php echo $likes?></a>. <a href="">Comment</a> . <span style="color:#999"><?php echo $ROW['date']?>  
-
-.
-</span>
-    <span style="color: #999; float:right">
-<?php
-
-$event = new Event();
-
-if($event->myEvent($ROW['eventid'], $_SESSION['userid'])){
-
-echo"
-      <a href='edit.php?eventid=$ROW[eventid]'>
-      Edit 
-      </a>  .
-
-      <a href='delete.php?eventid=$ROW[eventid]'>
-      Delete
-      </a>";  
-    }
-?>
 
 
-</span>
-</div>
 
-</div>
 
  <!--  Post 2 -->
 <!-- <div id="event">

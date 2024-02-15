@@ -13,7 +13,10 @@ private $error ="";
 
   $username = $data['username'];
   $password = $data['password'];
- /*  $password = password_hash($data["password"], PASSWORD_DEFAULT); */
+  
+    
+
+
 
    $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1 ";
        /* $result = $conn->query($sql);
@@ -39,41 +42,50 @@ private $error ="";
        $result = $DB ->read($sql);
 
 
+    
      if($result){
         $row = $result[0];
-
-
         if(password_verify($password, $row['password'])){
             //create session data
            /* $_SESSION['username'] = $row['username']; */ // Store username in session for future use
-           $_SESSION['userid'] = $row['userid'];
+          
+           $_SESSION["userid"] = $row["userid"];
          
-           $_SESSION['username'] = $row['username'];
-           header('location:userdasboard.php?user=' . $_SESSION['userid']);
+           $_SESSION["username"] = $username;
+           echo "Login successful!"; // Add this line for debugging
+
         
         }else{
-        $this->error .="Wrong password!<br>";
+            echo "Entered Password: " . $password . "<br>";
+            echo "Hashed Password from Database: " . $row['password'] . "<br>";
+            echo "Password Verification Failed!<br>";
+        $this->error .="Wrong password here.Try again!<br>";
         
         }
-
-    }else{
+ 
+    }else{ 
     
     $this->error .= "No such username was found<br>";
+   /*  echo "Query failed. Debugging: " . $DB->getError(); // Add this line for debugging */
+    exit();
+
     
     }
     
     return $this->error;
     
-    }
     
-//Check if the user is logged in
-    public function check_login($userid){
+}
 
-        $sql = "SELECT userid FROM users WHERE userid = 'userid' LIMIT 1 ";
+//Check if the user is logged in
+     function check_login($userid){
+
+        $sql = "SELECT userid FROM users WHERE userid = '$userid' LIMIT 1 ";
         $DB = new ControllerDatabase();
         $result = $DB ->read($sql);
+        
 
-if($result){
+if($result) {
     return true;
 
 
@@ -86,9 +98,5 @@ return false;
     
     }
 }
-
-
-
-
 
 
