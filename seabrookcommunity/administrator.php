@@ -22,11 +22,12 @@ if(isset($_SESSION['userid']) && is_numeric($_SESSION['userid'])){
 $user = new User();
 $user_data = $user->get_data($userid);
 
+
 if(!$user_data){
 /* header("Location: login.php");
     die();  */ 
 }else{
- header("Location: userdashboard.php");
+ header("Location: administrator.php");
  die();
 }
 } else{
@@ -119,7 +120,6 @@ $events = $event->getEvents($userid);
     // Display logout link if the user is logged in
     if (isset($_SESSION["username"])) {
         echo "Welcome, " . $_SESSION["username"] . "! | <a href='login.php?logout=true'>Logout</a>";
-        
     } 
     ?> 
     <div style="width:800px; margin:auto; font-size:30px;">

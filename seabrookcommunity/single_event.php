@@ -1,87 +1,50 @@
-<?php
+<?php  
 session_start();
-
 include("classes/loaderclass.php");
 
-
-if(isset($_SESSION['userid']) && is_numeric($_SESSION['userid'])){
-
-$userid = $_SESSION['userid'];
 $login = new Login();
 $user_data = $login->check_login($_SESSION['userid']);
 
 
-$Event = new Event();
-if(isset($_SERVER['HTTP_REFERER']) && !strstr($_SERVER['HTTP_REFERER'] , "delete.php")){
+//posting events starts here
 
-    $_SESSION['$return_to'] = $_SERVER['HTTP_REFERER'];
-   }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $event = new Event();
+    $userid = $_SESSION['userid']; 
    
-   if(isset($_GET['type']) && isset($_GET['eventid'])){
-       if(is_numeric($_GET['eventid'])){
-   
-   
-           $allowed[] = 'event';
-           $allowed[] = 'users';
-           $allowed[] = 'comment';
-   if(in_array($_GET['type'], $allowed)){
-   
-       $event = new Event();
-       $event->likeEvent($_GET['eventid'], $_GET['type'], $_SESSION['userid']);
-   
-   
-   }
-   
-   }
+    $result = $event-> createEvent($userid, $_POST);
+    if($result == ""){
+
+        header("Location: single_event.php?eventid=$_GET[eventid]");
+        die();
+
+    }else{
     
-       }
-
-  /*  header("Location: ". $return_to);
-   die(); */
-   
-
-
-$ERROR = "";
-
-
-//If eventid is set
-if(isset($_GET['eventid'])){
-
-  
-  $ROW = $Event->getSingleEvent($_GET['eventid']);
-
-  //If is not false it will return the row
-  if(!$ROW){
-
-
-    $ERROR = "No such event was found!";
-}else{
-    if($ROW['userid'] != $_SESSION['userid']){
-
-        $ERROR = "Access denied! You can not delete this file!";
-    
+        echo "<div style='text-align:center; font-size:12px; color:white;background-color:grey;'>";
+        echo "The following errors ocurred:<br>";
+        echo $result;
+        echo "</div>";
     
     }
 
 }
 
+
+$event = new Event();
+$ROW = false;
+
+$ERROR = "";
+if(isset($_GET['eventid'])){
+
+    $ROW = $event->getSingleEvent($_GET['eventid']);
+
 }else{
-
-    $ERROR = "No such event was found!";
-}
-}
-
-//If something was posted
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-
-    $Event->deleteEvent($_POST['eventid']);
-  /*   header("Location: ".$_SESSION['return_to']); */
-  header("Location: userdashboard.php");
-    die();
+    $ERROR = "No event found!";
 
 }
+
 ?>
-
 
 
 
@@ -91,7 +54,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <title>SeabrookCommunity | Delete</title>
+    <title>SeabrookCommunity | Search Title</title>
 </head>
 
 <style type="text/css">
@@ -188,8 +151,6 @@ margin-bottom: 20px;
 
 
 }
-
-
 </style>
 
 <body style="font-family: tahoma; background-color:#d0d8e4;" >
@@ -204,52 +165,73 @@ margin-bottom: 20px;
     }
     ?>
     <div style="width:800px; margin:auto; font-size:30px;">
-    My Profile &nbsp  &nbsp <input type="text" id="searchbox" placeholder=" Search for events">
+    <form method ="get"  action="search.php">
+    <a href="userdashboard.php" style="color:white;"> My Profile</a> &nbsp  &nbsp <input type="text" id="searchbox" name="find" placeholder=" Search events by title!">
+    </form>
 <!--     <img src="selfie.jpg" style=" width: 30px; float:right; border-radius: 50px; border:solid 2px white;"> -->
   
   
 </div>
 </div><br>
-
-<div style="display: flex;">
-
 <!-- cover area -->
+<div style="display: flex;">
 <div style="width:800px; margin:auto;  min-height:400px;">
 
-
+<div style="min-height:400px; flex:2.5; padding: 20px; padding-right: 0px;">
   <div style="border:solid thin #aaa; padding: 10px; background-color:white;">
 
-<form method="post">
 
-
-
-<?php 
-
-   if($ERROR != ""){
-    echo $ERROR;
-
-}else{
-
-    echo "Are you sure you want to delete this event??<br><br>";
-    $user = new User();
+  <?php 
+  
+  $user = new User();
+if(is_array($ROW)){
     $ROW_USER = $user->getUser($ROW['userid']);
-
-include("events_delete.php");
-echo "<input type='hidden' name='eventid' value='$ROW[eventid]'>";
-echo "<input id='event_button'  type='submit' value='Delete'>";
-
+    include("events.php");
 }
-?>
+  ?>
+
+
+<div style="border:solid thin #aaa; padding: 10px; background-color:white;">
+<!--   Posting an event
+ -->
+ <form method="post" action="userdashboard.php">
+   <textarea name="event"  placeholder="Post a comment!" placeholder="Event Title"style="width: 250%;
+    border:none;
+    font-family: tahoma;
+    font-size: 14px;
+    height:60px;"
+    ></textarea><br>
+    <input type="hidden" name="parent" value="<?php echo $ROW['eventid']?>">
+    <input id="event_button"  type="submit" value="Post a comment">
    
-   <br>
+<br>
 </form>
 </div>
-   
+<?php 
+
+$comments = $event->getComments($ROW['eventid']);
+
+if(is_array($comments)){
+    foreach($comments as $COMMENT){
+
+    include("comment.php");
+    
+    
+    
+    }
+
+
+
+}
+
+
+
+?>
+
 
 
 </div>
 </div>
 </div>
 </body>
-    
 </html>

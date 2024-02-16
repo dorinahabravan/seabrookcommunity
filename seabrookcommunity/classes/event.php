@@ -11,14 +11,23 @@ class Event{
     $event = addslashes($data['event']);
     $eventid = $this->create_eventid(); 
     $title = addslashes($data['title']);
-    $date = addslashes($data['date']);
-/*   $eventid = addslashes($data['eventid']); */
-
-    $sql = "INSERT INTO events (userid, eventid, event, title,date) VALUES ('$userid','$eventid','$event','$title', '$date')";
+    $date = !empty($data['date']) ? addslashes($data['date']) : null;
+    $parent= 0;
     $DB = new ControllerDatabase();
-    $DB ->save ($sql);
+
+ /*    if(isset($data['parent']) && is_numeric($data['parent'])){
+
+        $parent = $data['parent']; */
+
+        $sql = "UPDATE events SET  comments = comments + 1 WHERE eventid ='$parent' LIMIT 1";
+        $DB ->save ($sql);
     
-    }else{
+
+    $sql = "INSERT INTO events (userid, eventid, event, title, date, parent) VALUES ('$userid','$eventid','$event','$title', '$date', '$parent')";
+    echo $sql;
+    $DB ->save ($sql);
+
+ }else{
     
         $this->error .="Please type something to post!<br>";
     
@@ -46,6 +55,30 @@ class Event{
         }
     
     }
+
+
+
+    public function getComments($userid){
+    
+        $sql ="SELECT * FROM  events WHERE parent = '$userid' ORDER BY userid ASC LIMIT 10";
+        $DB = new ControllerDatabase();
+        $result = $DB->read($sql);
+       
+
+        if($result){
+        
+            return $result;
+        
+        
+        }else{
+         return false;
+        
+        
+        }
+    
+    }
+
+
 
 
     public function getSingleEvent($eventid){
@@ -79,12 +112,31 @@ public function deleteEvent($eventid){
         return false;
         
         }
+
+        /* $sql ="SELECT parent FROM events WHERE eventid = '$eventid' LIMIT 1";
+        $DB = new ControllerDatabase(); 
+        $result = $DB->read($sql); 
+
+
+         
+      
+     
+        if(is_array($result)){
+        if($result[0]['parent']  > 0){
+
+            $parent = $result['parent'];
+    
+            $sql = "UPDATE events SET comments = comments + 1 WHERE eventid= '$parent' LIMIT 1)";
+            $DB = new ControllerDatabase(); 
+            echo $sql;
+            $DB ->save($sql);
+        }
+    } */
+   
          $sql ="DELETE FROM  events WHERE eventid = '$eventid' LIMIT 1";
           $DB = new ControllerDatabase(); 
           $DB->delete($sql); 
-           
-  
-    
+        
         }
 
 //This function will check if the user owns the event and then delete it.
@@ -138,9 +190,7 @@ public function deleteEvent($eventid){
         public function likeEvent($id,  $type, $userid){
             if($type == "event"){
             
-
             //save likes
-           
             $sql="SELECT likes FROM likes  WHERE type = 'event' && contentid= '$id'  LIMIT 1";
             $DB = new ControllerDatabase();
             $result =  $DB->read($sql);

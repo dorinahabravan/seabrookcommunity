@@ -1,11 +1,6 @@
 <?php
 session_start();
 ob_start();
-
-print_r($_SESSION);
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 include("classes/loaderclass.php");
 
  $username ="";
@@ -22,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
  if($result != ""){
 
   echo "<div style='text-align:center; font-size:12px; color:white;background-color:grey;'>";
-  echo "The following errors ocurred:<br>";
+  echo "The following errors occurred:<br>";
   echo $result;
   echo "</div>";
 //If the login was successfully completed then redirect to the userdashboard page.

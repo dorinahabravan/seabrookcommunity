@@ -48,6 +48,9 @@ public function create_user($data){
   $password = password_hash($data["password"], PASSWORD_BCRYPT); // Hash the password
   $confirmPassword = password_hash($data["confirmPassword"], PASSWORD_BCRYPT); // Hash the confirmPassword
   $phoneNumber = $data["phoneNumber"];
+  $user_role_id = $data['user_role_id'];
+  /* if (!empty($_POST['user_role_id'])) {
+ $user_role_id = mysqli_real_escape_string($data, $_POST['user_role_id']); } */
 
   //Calling the method that generate a random userid
   /* $userid = $this->create_userid(); */
@@ -55,13 +58,32 @@ public function create_user($data){
 
      //I wrote the query without the id and it solved the 
     //Warning: Undefined array key "id" in C:\xampp\htdocs\seabrookcommunity\
-       $sql = "INSERT INTO users (userid, firstName, lastName, email, username, password, confirmPassword,phoneNumber) VALUES ('$userid','$firstName','$lastName','$email', '$username','$password','$confirmPassword','$phoneNumber')";
+       $sql = "INSERT INTO users (userid, firstName, lastName, email, username, password, confirmPassword,phoneNumber, user_role_id) VALUES ('$userid','$firstName','$lastName','$email', '$username','$password','$confirmPassword','$phoneNumber', '$user_role_id')";
 
        $DB = new ControllerDatabase();
        $DB ->save($sql);
      
 
+      /*  mysqli_query($data, $sql);
+       $_SESSION['username'] = $username;
+       $_SESSION['success'] = "You are now logged in"; */
+
+       $sql = "SELECT max(userid) userid FROM users;";
+       $DB = new ControllerDatabase();
+       $result = $DB ->read($sql);
+       $row = $result[0];
+       $_SESSION['userid'] = $row["userid"];
+       $role = $row['user_role_id'];
+       if ($role == 1) {
+           header("Location: administrator.php" . $_SESSION['userid']);
+       }
+       if ($role == 2) {
+           header("Location: userdashboard.php". $_SESSION['userid']);
+       }
+   }
 }
+
+
 //Function created by php to generate an userid
 /*  private function  create_userid()
 {
@@ -85,7 +107,7 @@ return $number;
 
 
 
-}
+
 
 
 

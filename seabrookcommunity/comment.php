@@ -14,7 +14,7 @@
     <body>
 
 
-<div id="event_bar">
+<div id="event_bar" style="background-color: #eee;">
 
 
 
@@ -29,46 +29,33 @@
     
     <div style="font-weight : bold; color: black; font-style: bold;"> 
     <?php 
-    echo $ROW['title'];
+    echo $COMMENT['title'];
     ?></div>
 
     <div style="font-weight :normal; color: black;">
     <?php 
-    echo $ROW['event'];
+    echo $COMMENT['event'];
     ?></div>
     <br><br>
     <?php 
     $likes = "";
-    $likes = ($ROW['likes'] > 0) ? "(" .$ROW['likes']. ")" : "" ;
+    $likes = ($COMMENT['likes'] > 0) ? "(" .$COMMENT['likes']. ")" : "" ;
    
     ?>
-    <a href="likes.php?type=event&eventid=<?php echo $ROW['eventid']?>">Like<?php echo $likes?></a>. 
-
-    <?php 
-    $comments = "";
-
-    if($ROW['comments']  > 0){
-    $comments = "(". $ROW['comments'] . ")";
-    
-    }
-
-    
-    
-    
-    ?>
-    <a href="single_event.php?eventid=<?php echo $ROW['eventid'] ?>">Comment<?php echo $comments ?></a> . <span style="color:#999"><?php echo $ROW['date']?>  
+    <a href="likes.php?type=event&eventid=<?php echo $COMMENT['eventid']?>">Like<?php echo $likes?></a>. 
+    <a href="single_event.php?eventid=<?php echo $COMMENT['eventid'] ?>"></a> . <span style="color:#999"><?php echo $ROW['date']?>  
 .
 </span>
     <span style="color: #999; float:right">
 <?php
 $event = new Event();
-if($event->myEvent($ROW['eventid'], $_SESSION['userid'])){
+if($event->myEvent($COMMENT['eventid'], $_SESSION['userid'])){
 echo"
-      <a href='edit.php?eventid=$ROW[eventid]'>
+      <a href='edit.php?eventid=$COMMENT[eventid]'>
       Edit 
       </a>  .
 
-      <a href='delete.php?eventid=$ROW[eventid]'>
+      <a href='delete.php?eventid=$COMMENT[eventid]'>
       Delete
       </a>";  
     }

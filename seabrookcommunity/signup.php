@@ -52,9 +52,9 @@ if($result != ""){
 <div id="divSignup">
 <!--   The signup form -->
         <form action="signup.php" method="post">
-  <div class="container" >
+  <div class="container" style="width:600px;">
     <h1 style=" width:600px;
-   height: 200px; margin:5px 0 22px 0;">Sign Up</h1><br><br>
+   height: 100px; margin:5px 0 22px 0;">Sign Up</h1><br><br>
    <!--  <p>Please fill in this form to create an account.</p><br><br> -->
 
     <label for="firstName"><b>First Name</b></label>
@@ -78,6 +78,10 @@ if($result != ""){
     <label for="phoneNumber"><b>Phone Number</b></label>
     <input type="text" placeholder="Phone Number" name="phoneNumber" required>
 
+        <label for="user_role_id"><b>Role<b></label>
+        <input type="radio" name="user_role_id" value="1" required> Administrator
+        <input type="radio" name="user_role_id" value="2" required> User</input><br>
+    
 
     <label>
       <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
@@ -87,7 +91,7 @@ if($result != ""){
 
     <div class="clearfix">
     <button type="button" name="back" value="back" onClick="window.location='index.php';">Back</button>
-      <button type="button" class="cancelbtn" name="cancel" value="cancel" onClick="window.location='index.php';">Cancel</button>
+      <!-- <button type="button" class="cancelbtn" name="cancel" value="cancel" onClick="window.location='index.php';">Cancel</button> -->
 
 
      
@@ -96,9 +100,7 @@ if($result != ""){
     </div>
   </div>
 </form>
-<div class="footer">
-  <p>Footer</p>
-</div>
+
 </div>
 </body>
 </html>
